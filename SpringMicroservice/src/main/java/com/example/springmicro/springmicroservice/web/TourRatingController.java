@@ -6,6 +6,9 @@ import com.example.springmicro.springmicroservice.domain.TourRatingPk;
 import com.example.springmicro.springmicroservice.repository.TourRatingRepository;
 import com.example.springmicro.springmicroservice.repository.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +45,17 @@ public class TourRatingController {
                 .map(RatingDto::new).collect(Collectors.toList());
     }
 
+    @GetMapping(path = "/getAllRatingByPagingAndSorting")
+    public Page<RatingDto> getAllRatingsForTourByPaging(@PathVariable(value = "tourId") int tourId, Pageable pageable) {
+        verifyTour(tourId);
+        Page<TourRating> ratings = tourRatingRepository.findByPkTourId(tourId, pageable);
+        return new PageImpl<>(
+                ratings.get().map(RatingDto::new).collect(Collectors.toList()),
+                pageable,
+                ratings.getTotalElements()
+        );
+    }
+
     @GetMapping(path = "/average")
     public Map<String, Double> getAverage(@PathVariable(value = "tourId") int tourId) {
         verifyTour(tourId);
@@ -50,7 +64,7 @@ public class TourRatingController {
                 .orElseThrow(() -> new NoSuchElementException("Tour has no Ratings")));
     }
 
-    @PostMapping(path = "/createTour")
+    @PostMapping(path = "/createTourRating")
     @ResponseStatus(HttpStatus.CREATED)
     public void createTourRating(@PathVariable(value = "tourId") int tourId, @RequestBody @Validated RatingDto ratingDto) {
         Tour tour = verifyTour(tourId);

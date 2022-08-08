@@ -2,6 +2,8 @@ package com.example.springmicro.springmicroservice.repository;
 
 import com.example.springmicro.springmicroservice.domain.TourRating;
 import com.example.springmicro.springmicroservice.domain.TourRatingPk;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
@@ -27,5 +29,7 @@ public interface TourRatingRepository extends CrudRepository<TourRating, TourRat
     Optional<TourRating> findByPkTourIdAndPkCustomerId(Integer tourId, Integer customerId);
 
     Optional<TourRating> findByPkCustomerId(Integer customerId);
+
+    Page<TourRating> findByPkTourId(Integer id, Pageable pageable);
 }
 
