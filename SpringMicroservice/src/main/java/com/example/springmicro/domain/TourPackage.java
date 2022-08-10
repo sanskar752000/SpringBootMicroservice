@@ -1,19 +1,17 @@
-package com.example.springmicro.springmicroservice.domain;
+package com.example.springmicro.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Objects;
 
 /**
  * A Classification of Tours.
  */
-@Entity
+@Document
 public class TourPackage {
     @Id
     private String code;
 
-    @Column
     private String name;
 
     protected TourPackage() {

@@ -1,13 +1,15 @@
-package com.example.springmicro.springmicroservice.service;
+package com.example.springmicro.service;
 
-import com.example.springmicro.springmicroservice.domain.TourPackage;
-import com.example.springmicro.springmicroservice.repository.TourPackageRepository;
+import com.example.springmicro.domain.TourPackage;
+import com.example.springmicro.repository.TourPackageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Tour Package Service
+ */
 @Service
 public class TourPackageService {
-
     private TourPackageRepository tourPackageRepository;
 
     @Autowired
@@ -15,13 +17,25 @@ public class TourPackageService {
         this.tourPackageRepository = tourPackageRepository;
     }
 
-    public TourPackage createTourPackage(String code, String name) {
 
+    /**
+     * Create a Tour Package
+     *
+     * @param code code of the package
+     * @param name name of the package
+     *
+     * @return new or existing tour package
+     */
+    public TourPackage createTourPackage(String code, String name) {
         return tourPackageRepository.findById(code)
                 .orElse(tourPackageRepository.save(new TourPackage(code, name)));
     }
 
-    public Iterable<TourPackage> lookup() {
+    /**
+     * Lookup All Tour packages
+     *
+     */
+    public Iterable<TourPackage> lookup(){
         return tourPackageRepository.findAll();
     }
 
