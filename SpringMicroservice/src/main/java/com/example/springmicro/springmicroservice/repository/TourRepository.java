@@ -3,18 +3,17 @@ package com.example.springmicro.springmicroservice.repository;
 import com.example.springmicro.springmicroservice.domain.Tour;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RestResource;
 
-import java.util.List;
+
 
 public interface TourRepository extends PagingAndSortingRepository<Tour, Integer> {
     Page<Tour> findByTourPackageCode(String code, Pageable pageable);
 
     @Override
     @RestResource(exported = false)
-    <S extends Tour> S save(S entity);
+    <S extends Tour> S save(S s);
 
     @Override
     @RestResource(exported = false)
@@ -27,10 +26,6 @@ public interface TourRepository extends PagingAndSortingRepository<Tour, Integer
     @Override
     @RestResource(exported = false)
     void delete(Tour entity);
-
-    @Override
-    @RestResource(exported = false)
-    void deleteAllById(Iterable<? extends Integer> integers);
 
     @Override
     @RestResource(exported = false)

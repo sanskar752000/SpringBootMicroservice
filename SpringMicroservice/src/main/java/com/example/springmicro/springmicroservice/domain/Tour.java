@@ -1,9 +1,14 @@
 package com.example.springmicro.springmicroservice.domain;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
+
+/**
+ * The Tour contains all attributes of an Explore California Tour.
+ */
 @Entity
-public class Tour {
+public class Tour implements Serializable{
     @Id
     @GeneratedValue
     private Integer id;
@@ -34,11 +39,10 @@ public class Tour {
     private TourPackage tourPackage;
 
     @Column
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
 
     @Column
-    @Enumerated
     private Region region;
 
     public Tour(String title, String description, String blurb, Integer price, String duration, String bullets,
@@ -66,48 +70,24 @@ public class Tour {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getBlurb() {
         return blurb;
     }
 
-    public void setBlurb(String blurb) {
-        this.blurb = blurb;
-    }
-
     public Integer getPrice() {
         return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
     }
 
     public String getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
     public String getBullets() {
         return bullets;
-    }
-
-    public void setBullets(String bullets) {
-        this.bullets = bullets;
     }
 
     public String getKeywords() {
@@ -118,28 +98,12 @@ public class Tour {
         return tourPackage;
     }
 
-    public void setTourPackage(TourPackage tourPackage) {
-        this.tourPackage = tourPackage;
-    }
-
-    public void setKeywords(String keywords) {
-        this.keywords = keywords;
-    }
-
     public Difficulty getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
-    }
-
     public Region getRegion() {
         return region;
-    }
-
-    public void setRegion(Region region) {
-        this.region = region;
     }
 
     @Override

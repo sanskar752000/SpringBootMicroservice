@@ -28,7 +28,6 @@ public interface TourRatingRepository extends CrudRepository<TourRating, TourRat
      */
     Optional<TourRating> findByPkTourIdAndPkCustomerId(Integer tourId, Integer customerId);
 
-    Optional<TourRating> findByPkCustomerId(Integer customerId);
 
     Page<TourRating> findByPkTourId(Integer id, Pageable pageable);
 }

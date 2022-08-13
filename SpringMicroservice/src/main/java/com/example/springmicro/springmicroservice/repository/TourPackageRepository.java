@@ -25,10 +25,6 @@ public interface TourPackageRepository extends CrudRepository<TourPackage, Strin
 
     @Override
     @RestResource(exported = false)
-    void deleteAllById(Iterable<? extends String> strings);
-
-    @Override
-    @RestResource(exported = false)
     void deleteAll(Iterable<? extends TourPackage> entities);
 
     @Override
