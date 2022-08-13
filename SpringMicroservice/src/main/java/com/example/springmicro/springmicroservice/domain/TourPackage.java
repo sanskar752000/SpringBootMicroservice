@@ -3,12 +3,14 @@ package com.example.springmicro.springmicroservice.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
 /**
  * A Classification of Tours.
  */
 @Entity
+@Table(name = "tour_package")
 public class TourPackage {
     @Id
     private String code;

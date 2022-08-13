@@ -18,7 +18,7 @@ public interface TourRatingRepository extends CrudRepository<TourRating, TourRat
      * @param tourId is the tour Identifier
      * @return a List of any found TourRatings
      */
-    List<TourRating> findByPkTourId(Integer tourId);
+    List<TourRating> findByTourId(Integer tourId);
 
     /**
      * Lookup a TourRating by the TourId and Customer Id
@@ -26,9 +26,9 @@ public interface TourRatingRepository extends CrudRepository<TourRating, TourRat
      * @param customerId customer identifier
      * @return Optional of found TourRatings.
      */
-    Optional<TourRating> findByPkTourIdAndPkCustomerId(Integer tourId, Integer customerId);
+    Optional<TourRating> findByTourIdAndCustomerId(Integer tourId, Integer customerId);
 
 
-    Page<TourRating> findByPkTourId(Integer id, Pageable pageable);
+    Page<TourRating> findByTourId(Integer id, Pageable pageable);
 }
 
