@@ -6,6 +6,8 @@ import com.example.springmicro.springmicroservice.domain.TourRatingPk;
 import com.example.springmicro.springmicroservice.repository.TourRatingRepository;
 import com.example.springmicro.springmicroservice.repository.TourRepository;
 import com.example.springmicro.springmicroservice.service.TourRatingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "/tours/{tourId}/ratings")
 public class TourRatingController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(TourRatingController.class);
 
     private TourRatingService tourRatingService;
     @Autowired
@@ -81,6 +84,7 @@ public class TourRatingController {
     public void createManyTourRatings(@PathVariable(value = "tourId")int tourId,
                                       @PathVariable(value = "score") int score,
                                       @RequestParam("customers") Integer[] customers) {
+        LOGGER.info("POST /tours/{}/ratings/{}", tourId, score);
         tourRatingService.saveManyRatings(tourId, score, customers);
     }
 
@@ -92,12 +96,14 @@ public class TourRatingController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoSuchElementException.class)
     public String return400(NoSuchElementException ex) {
+        LOGGER.error("Unable to complete transaction", ex);
         return ex.getMessage();
     }
 
     @ResponseStatus(HttpStatus.ALREADY_REPORTED)
     @ExceptionHandler(KeyAlreadyExistsException.class)
     public String return208(KeyAlreadyExistsException ex) {
+        LOGGER.error("Unable to complete transaction", ex);
         return ex.getMessage();
     }
 

@@ -4,6 +4,8 @@ import com.example.springmicro.springmicroservice.domain.Tour;
 import com.example.springmicro.springmicroservice.domain.TourRating;
 import com.example.springmicro.springmicroservice.repository.TourRatingRepository;
 import com.example.springmicro.springmicroservice.repository.TourRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.management.openmbean.KeyAlreadyExistsException;
 import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.OptionalDouble;
@@ -18,6 +21,8 @@ import java.util.OptionalDouble;
 @Service
 @Transactional // roll back the database activity if something fails before completion
 public class TourRatingService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TourRatingService.class);
     private TourRatingRepository tourRatingRepository;
     private TourRepository  tourRepository;
 
@@ -59,8 +64,10 @@ public class TourRatingService {
     }
 
      public void saveManyRatings(int tourId, int score, Integer[] customers) {
+        LOGGER.info("Rate tour {} by customer {}", tourId, Arrays.asList(customers).toString());
         tourRepository.findById(tourId).ifPresent(tour -> {
             for(Integer c: customers) {
+                LOGGER.debug("Attempt to create Tour Rating for customer {}", c);
                 tourRatingRepository.save(new TourRating(tour, c, score));
             }
         });
