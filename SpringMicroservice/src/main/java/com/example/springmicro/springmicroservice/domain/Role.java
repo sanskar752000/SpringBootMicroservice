@@ -1,10 +1,12 @@
 package com.example.springmicro.springmicroservice.domain;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "security_role")
-public class Role {
+public class Role implements GrantedAuthority {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,5 +42,10 @@ public class Role {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String getAuthority() {
+        return roleName;
     }
 }
