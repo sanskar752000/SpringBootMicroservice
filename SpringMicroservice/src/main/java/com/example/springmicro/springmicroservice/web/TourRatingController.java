@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,6 +49,7 @@ public class TourRatingController {
     }
 
     @PostMapping(path = "/createTourRating")
+    @PreAuthorize("hasRole('ROLE_CSR')")
     @ResponseStatus(HttpStatus.CREATED)
     public void createTourRating(@PathVariable(value = "tourId") int tourId, @RequestBody @Validated RatingDto ratingDto) {
         tourRatingService.createNewRating(tourId, ratingDto.getCustomerId(), ratingDto.getScore(), ratingDto.getComment());
@@ -59,6 +61,7 @@ public class TourRatingController {
      * @return the new RatingDto Object
      * */
     @PutMapping(path = "/updateRatingWithPut")
+    @PreAuthorize("hasRole('ROLE_CSR')")
     public RatingDto updateWithPut(@PathVariable(value = "tourId") int tourId, @RequestBody @Validated RatingDto ratingDto) {
         return toDto(tourRatingService.updateTourRating(tourId, ratingDto.getCustomerId(), ratingDto.getScore(), ratingDto.getComment()));
     }
@@ -69,17 +72,20 @@ public class TourRatingController {
     * @return the new RatingDto Object
     * */
     @PatchMapping(path = "/updateRatingWithPatch")
+    @PreAuthorize("hasRole('ROLE_CSR')")
     public RatingDto updateWithPatch(@PathVariable(value = "tourId") int tourId, @RequestBody @Validated RatingDto ratingDto) {
         return toDto(tourRatingService.updateTourRating(tourId, ratingDto.getCustomerId(), ratingDto.getScore(), ratingDto.getComment()));
     }
 
     @DeleteMapping(path = "/delete/{customerId}")
+    @PreAuthorize("hasRole('ROLE_CSR')")
     public void delete(@PathVariable(value = "tourId") int tourId,
                        @PathVariable(value = "customerId") int customerId) {
         tourRatingService.deleteTourRating(tourId, customerId);
     }
 
     @PostMapping("/createManyRatings/{score}")
+    @PreAuthorize("hasRole('ROLE_CSR')")
     @ResponseStatus(HttpStatus.CREATED)
     public void createManyTourRatings(@PathVariable(value = "tourId")int tourId,
                                       @PathVariable(value = "score") int score,
