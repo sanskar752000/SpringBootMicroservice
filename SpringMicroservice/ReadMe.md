@@ -70,6 +70,11 @@ docker build -t explorecalifonia .
 ``
 docker run --name ec-app -p8080:8080 -d explorecalifonia
 ``
+
+##### Run Docker container linked with mysql
+``
+docker run  --name ec-app -p 8080:8080  --link ec-mysql:mysql -d explorecalifornia
+``
 ##### enter Docker container
 ``
 docker exec -t -i ec-app /bin/bash
