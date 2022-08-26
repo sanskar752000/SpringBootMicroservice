@@ -35,3 +35,42 @@ Final Product requires External MySql Database. Install Docker For Mac/Windows/L
 **Remove image (must stop and remove container first)**
 
 `docker rmi mysql:latest`
+
+#### Startup with Profile settings
+##### Default profile, H2 database
+``
+mvn spring-boot:run
+``
+
+or
+
+``
+java  -jar target/SpringMicroservice-0.0.1-SNAPSHOT.jar
+``
+##### mysql profile, MySql database (requires running container ec-mysql)
+``
+mvn spring-boot:run -Dspring.profiles.active=mysql
+``
+
+or
+
+``
+java  -Dspring.profiles.active=mysql -jar target/SpringMicroservice-3.0.0-SNAPSHOT.jar
+``
+#### Dockerize Explore California
+##### Build jar
+``
+mvn package -DskipTests
+``
+##### Build Docker image
+``
+docker build -t explorecalifonia .
+``
+##### Run Docker container
+``
+docker run --name ec-app -p8080:8080 -d explorecalifonia
+``
+##### enter Docker container
+``
+docker exec -t -i ec-app /bin/bash
+``
